@@ -191,7 +191,7 @@ Cmp   Size  Command
      85 MB  (missing)
     591 MB  (missing)
 ```
-```plain{4
+```plain{4}
 Cmp   Size  Command
      10 MB  FROM blobs
     109 MB  (missing)
