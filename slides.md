@@ -122,16 +122,19 @@ ENTRYPOINT java -jar /app/build/libs/spring-petclinic*.jar
 
 # Result
 
-```text {4|3|2}{maxHeight:'300px'}
-ID         TAG      SIZE      COMMAND
-f5a49e8fff x:latest 0B        ENTRYPOINT ["/bin/sh" "-c" "java -jar /app/build/libs/spring-petclinic*.jar"]
-42a56e493e          103.85MiB /bin/sh -c cd /app && ./gradlew build -xtest                                                                                             
-00b57a605b          9.64MiB   COPY dir:3844d30a73627d4a022c7521fd95428df62f983129d67748162f1a51e22744ec in /app
+```text {all|3|4|5}{maxHeight:'300px'}
+Cmp   Size  Command
+     10 MB  FROM blobs
+    109 MB  cd /app && ./gradlew build -xtest
+     85 MB  (missing)
+    591 MB  (missing)
 ```
 
-\+ 500 MB of Docker caches
+<span v-click="1">109 MB of Java</span>
 
-\+ 109 MB of Java
+<span v-click="2">85 MB of the app</span>
+
+<span v-click="3">591 MB of Java build caches</span>
 
 ---
 layout: two-cols-header
@@ -181,20 +184,22 @@ CMD java -jar /app/app.jar
 # Results
 
 ````md magic-move
-```plain {3,4}
-ID         TAG      SIZE      COMMAND
-f5a49e8fff x:latest 0B        ENTRYPOINT ["/bin/sh" "-c" "java -jar /app/build/libs/spring-petclinic*.jar"]
-42a56e493e          103.85MiB /bin/sh -c cd /app && ./gradlew build -xtest                                                                                             
-00b57a605b          9.64MiB   COPY dir:3844d30a73627d4a022c7521fd95428df62f983129d67748162f1a51e22744ec in /app
+```plain {4-5}
+Cmp   Size  Command
+     10 MB  FROM blobs
+    109 MB  cd /app && ./gradlew build -xtest
+     85 MB  (missing)
+    591 MB  (missing)
 ```
-```plain {}
-ID         TAG      SIZE    COMMAND
-1a68ef3cc9 x:latest 0B      CMD ["/bin/sh" "-c" "java -jar /app/app.jar"]
-d8993bf6b2          69MiB  COPY file:783f59b950ef5efb6a4ea73f8e7c3c33c90b77f06f325e0544def3e9de82e3e0 in /app/app.jar
+```plain{4
+Cmp   Size  Command
+     10 MB  FROM blobs
+    109 MB  (missing)
+     69 MB  (missing)
 ```
 ````
 
-\+ No Gradle caches and build dir!
+No Gradle caches and build dir!
 
 ---
 layout: statement
